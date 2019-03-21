@@ -1,0 +1,29 @@
+
+Proiectul are o clasa de baza (Main) din care testez si o clasa mare parinte, de tip text, din care sunt derivate alte doua: text criptat(ce are doar textul criptat public) si text decriptat(prin care se reconstruieste textul initial pornind de la un cryptotext si un plaintext). 
+
+
+Cateva probleme pe care le-am intampinat:
+1. de logica: 
+-la inceput am facut shiftarea invers in text (adica atunci cand incercam sa decriptez adunam in loc sa scad, si obtineam un text bun si o cheie rea)
+
+2. de sintaxa:
+-declaram obiect=null (deci NullPointerException)
+-comparam doua obiecte de tip String fara a folosi equals (deci le comparam pointerii crezand ca le compar valorile)
+
+3. altele:
+-initial nu am scos toate caracterele nepermise din text si incercam sa criptez si caractere speciale
+-am incercat sa mai modific parametrii (adica eroarea acceptata, modul de calculare al ei, ..) ca sa imi accepte mai usor lucrurile lungi, si da, mergea si sa accepte si lucrurile de genul "CEEEEEE", dar mai lua si chei de tipul "CHEIECHEIECHEIE", asa ca am facut la final o comprimare a cheii ( sa fiu sigura ca nu e formata dintr-o secventa ce se repeta - nu ar fi avut rost sa fie facuta din k subsecvente identice). 
+-m-am grabit sa incep implementarea crezand ca am inteles tot asa ca am incercat sa fac statistici pentru fiecare litera in parte si sa vad procentul obtinuit carei litere ii corespunde (din graficul de la curs). Nu mergea asa, deci m-am gandit la ceva hibrid cu un algoritm genetic: avand o lista de cuvinte din limba engleza si mai multe chei cu probabilitate mare de a fi bune, sa fac pentru fiecare cheie decriptarea cryptotextului si sa vad cat de multe blocuri de text corespund cu niste cuvinte din acea lista. Iar pentru asocierile corecte sa ofer punctaje (pentru un cuvant ca "environmental", punctajul va fi foarte mare, fiindca e aproape imposibil sa fie tradus gresit, iar pentru unul ca "us", aproape nesemnificativ). Problema e ca nu prea exista pasi intermediari in algoritmul asta.. daca se gaseste un cuvant asa lung sigur e buna decriptarea, daca nu se gaseste, mai mult ca sigur e gresita. Si apoi fiindca sunt foarte multe combinatii de chei, ar trebui cumva sa se porneasca cu mai multe atribuiri determinate din statistica. Atunci m-am uitat mai bine pe pdf si am vazut ca iese cam tot doar cu probabilitati si formule. 
+
+
+In cazul general se obtin cheile corecte, dar sunt si care nu functioneaza. 
+functioneaza:
+- cheile in care sunt distribuite cat de cat aleatoriu literele (~cuvinte normale)
+- sau cheile in care toate caracterele sunt egale (deci e ca o criptare Affine)
+- cheile cu litere diferite, dar care au probabilitati egale de apatitie.("FGGFFPGPG")
+nu functioneaza:
+- pentru unele cazuri speciale de tipul: " BBBBBBBBBC"
+
+
+Observatie:
+Desi "BBBBBBBBBD" functioneaza, "BBBBBBBBBC", care are acelasi numar de litere, nu functioneaza. Explicatie: B si C au probabilitate aproximativ egala de a aparea intr-un text. Fiind foarte multe litere identice, atunci cand se face media diferenta asta se distribuie la mai multe numere si ajunge sa fie neglijata. Cheia "BBBBC", avand putini de B, va fi gasita corect. Totusi, nu este ingrijorator ca o litera este gresita, fiindca si asa, cunoscand 9 din 10 litere putem intelege mesajul. 

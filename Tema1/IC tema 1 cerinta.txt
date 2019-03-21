@@ -1,0 +1,9 @@
+Tema 1:
+
+Criptanaliza sistemelor clasice (S(26), V(26))
+Criptanaliza cu succes in cazul V(26) facand testul indexului de coincidenta sau al indexului de coincidenta mutuala (10 puncte) sau
+
+Criptanaliza pentru S(26) bazata pe analiza frecventei literelor (8 puncte)
+
+Termen de predare: 7 martie (saptamana a 3-a)
+Predare cu penalizare 20%: 14 martie

@@ -1,0 +1,178 @@
+The field of genetics is seeing a lot of attention in AI these days. We have seen breakthroughs happening in scientific research lately but most people cannot make head or tails of how to even begin understanding this field.
+
+So in this article I will give you a tour of how the Genetic Algorithm works and why you should consider it the next time you are building a neural network model. Let’s dig in!
+
+Table of Contents
+Infinite Monkey Theorem
+Understanding Genetic Algorithms
+How these Principles are Implemented in Genetic Algorithms
+How to use it in Artificial Intelligence projects
+Infinite Monkey Theorem
+
+The infinite monkey theorem states that if a monkey starts hitting keys at random on a keyboard for an infinite amount of time, he will almost surely type a given text, such as the complete works of William Shakespeare. In fact, the monkey would almost surely type every possible finite text an infinite number of times. However, the probability of this event is so tiny that it will require more time than the estimated age of the universe, but chances of occurrence of this event is not zero.
+
+Proof
+
+Suppose the typewriter has 50 keys, and the word to be typed is “banana”. If the keys are pressed randomly and independently, it means that each key has an equal chance of being pressed. Then, the chance that the first letter typed is ‘b’ is 1/50, and the chance that the second letter typed is ‘a’ is also 1/50, and so on. Therefore, the chance of the first six letters spelling “banana” is:
+
+(1/50) × (1/50) × (1/50) × (1/50) × (1/50) × (1/50) = (1/50)6 = 1/15 625 000 000, i.e., less than one in 15 billion. But still not zero, hence an outcome is still possible.
+
+So, the monkey will type the word ‘banana’ 1 out of 15,625,000,000 times. Now let us suppose the monkey hits a key per second the amount of time being taken for this event to occur in the worst case is 495 years approx.
+
+Now if I simulate a computer program for the above problem and do a Brute Force search for the word “banana”, the amount of computation and time involved is going to be huge.
+
+But, if I want to type the same, it will take me less than 6 seconds to do it. Why? Because I know letters, and I know the word banana and its spelling.
+
+So, can I use Evolution Theory and improve my program significantly? Yes, and this is thanks to the concept of Genetic Algorithms.
+
+Understanding Genetic Algorithms
+
+It is an algorithm that is inspired by Darwin’s theory of Natural Selection to solve optimization problems. It is a good solution especially with incomplete or imperfect information, or even limited computational capacity.
+
+In Darwin’s theory of Natural Selection, the three main principles necessary for evolution to happen are :
+
+1) Heredity — There must be a process in place by which children receive the property of their parent
+
+2) Variation — There must be a variety of traits present in the population or a means with which to introduce a variation
+
+3) Selection — There must be a mechanism by which some members of thr population can be parents and pass down their genetic information and some do not (survival for the fittest)
+
+How these principles are implemented in Genetic Algorithms
+There are Five phases in a genetic algorithm:
+
+1. Creating an Initial population
+
+2. Defining a Fitness function
+
+3. Selecting the parents
+
+4. Making a Crossover
+
+5. Mutation
+
+Creating an Initial Population
+
+In this step, we create a set of n elements which is called a Population. Each element from the population is a solution to the problem you want to solve.
+
+In our case, let this population be:
+
+bahama
+abcdef
+ijklmn
+….
+All other 6 character words
+mnopqr
+stuvwx
+cabana
+Defining a Fitness Function
+
+The fitness function determines how likely an individual is fit to be selected for reproduction, and this is based on its fitness score. Let’s suppose our fitness function will assign a fitness score or a probability percentage to each element from the population, for each character matching our target word banana.
+
+In our case, let this population be:
+
+Elements, Fitness Score
+
+banyan, 5 #(5 characters out of letters from ‘b’, ‘a’, ’n’, ‘a’, ’n’, ‘a’ are present in this word, those are ‘b’, ‘a’, ’n’, ‘a’, ‘n’)
+abcdef, 2#(Similarly, 2 characters out of letters from ‘b’, ‘a’, ’n’, ‘a’, ’n’, ‘a’ are present in this word, those are ‘a’ and ‘b’)
+ijklmn, 1 #(Following the above rule, it has only one matching word — ‘a’)
+……, ..
+All other 6-character words, ..
+mnopqr, 1
+stuvwx, 0
+cabana, 5
+etc …
+Selecting the Parents
+
+The idea behind this step is to select the fittest individuals and let them pass their genes to the next generation. Two elements of the population are selected based on their fitness scores. In our case, we select individuals with high fitness scores.
+
+In our case, we selected these elements as these words have a high fitness score from the given population.
+
+Elements, Fitness Score
+
+banyan, 5
+cabana, 5
+Making a Crossover
+
+It is the most significant phase in a genetic algorithm. In this step, we reproduce a new population of n elements from the selected elements. In this step, we have to permute and combine as many possible words from the characters obtained from the two parent words that were selected in the previous step. In our case, the parent words are ‘banyan’ and ‘cabana’.
+
+For example, we can pick the last 3 words from the word ‘banyan’ and first 3 words from the word ‘cabana’ and form a new word as ‘cabyan’,
+
+After applying all possible combinations from the word ‘banyan’ and ‘cabana’, we get a new population set.
+
+In our case the new reproduced elements are:
+
+Reproduced n Elements
+
+canyan
+cabyan
+cabyna
+babyna
+……
+All other possible combinations from the parent words ‘banyan’ and ‘cabana’
+banana
+yanbac
+etc …
+Making a Mutation
+
+There are chances that from the crossover phase, we might get a population which will not contribute to the evolution of a new diverse population and our algorithm will converge prematurely. So we need to alter the sequence of words from 1% of the newly created population to maintain this diversity. We can choose any sort of alteration.
+
+For example, suppose from 1% of the previous population we get words like ‘banyan’, and ‘yanbac’. Now we select these elements for creating a new population as these words have good fitness scores of 5 and 4 respectively, and thus have a high probability of being parents. Now if we pick the last 3 and first 3 letters from these two words and combine them, we will get ‘yanyan’ and this word is no longer productive enough to get any new diverse elements.
+
+But if we mutate our 1% of the previous population and alter the letters of ‘banyan’ and ‘yanbac’ by simply flipping the first and last letters in both words, we get ‘nanyab’ and ‘canbay’. Now if we apply the same combination of thelast 3 and first 3 letters of the mutated elements, we get ‘yabcan’ which is quite diverse from ‘yanyan’. (Note that in mutation you can alter elements in as many possible ways as you like. Flipping the first and last element is just a random way used in this example).
+
+When does this process stop?
+
+Our population has a fixed size. As new elements are formed, old elements with low fitness score are removed. When the population has converged, i.e., no new elements are reproduced which are significantly different from the previous population, then we may say that the genetic algorithm has provided a set of solutions to our problem.
+
+In our case when we find that all the population has a fitness score of 6 having a combination of all letters from word banana.
+
+Convergence
+
+nnbaaa
+aaabnn
+aabann
+abaann
+……
+banana
+baaann
+We have a converged set, i.e., no matter how many times we repeat the entire above process, we are going to get only these set of elements. In our final set there must be the word banana, and so our simulated Infinite Monkey program has typed the word banana in a significantly less time as compared to brute force.
+
+Pseudocode
+
+START
+ — create the initial population
+Compute fitness
+REPEAT
+ — Selection
+ — Crossover
+ — Mutation
+ — Compute fitness
+UNTIL population has converged
+STOP
+Great algorithm but why should it be used in Artificial Intelligence?
+
+We can implement Genetic Algorithms to learn the best hyper-parameters for a Neural Network. To learn the hyper-parameters, we apply Genetic Algorithms as described in the steps below:
+
+• Create a population of several Neural Networks
+
+• Assign hyper-parameters randomly to all the Neural Networks
+
+• Repeat the following
+
+1. Train all the Neural Networks.
+
+2. Calculate their training cost (Ex- training error and regularization terms)
+
+3. From the cost of previous Neural Networks, calculate a fitness score from that set of hyper-parameters. The best Neural Networks will have the lowest cost. So, its inverse will give a high fitness value
+
+4. Select the two best Neural Networks based on their fitness
+
+5. Reproduce new Neural Networks from these
+
+6. Mutate the genes of the child
+
+7. Perform steps 5–7 for all the Neural Networks in the population. At the end of the latest generation, we have the optimum hyper-parameters
+
+Conclusion
+
+Genetic Algorithms can be used to solve various types of optimization problems. And we saw how to work with hyper-parameters in Artificial Intelligence with Genetic Algorithm. It’s a good alternative and worth checking out for your next project!
